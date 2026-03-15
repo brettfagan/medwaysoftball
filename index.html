@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -269,6 +270,72 @@
       }
     }
 
+    /* COHORT TABS */
+    .cohort-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .ctab {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--slate);
+      transition: all 0.15s;
+    }
+    .ctab:hover { background: var(--green-pale); color: var(--green); }
+    .ctab.active { background: var(--green); color: white; border-color: var(--green); }
+    .cohort-table { display: none; overflow-x: auto; }
+    .cohort-table.active { display: block; }
+    .cohort-grid {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      min-width: 560px;
+    }
+    .cohort-grid th {
+      background: var(--green-pale);
+      color: var(--green);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 8px 10px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .cohort-grid th:first-child { text-align: left; min-width: 160px; }
+    .cohort-grid td {
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      color: var(--slate);
+    }
+    .cohort-grid td:first-child { text-align: left; font-weight: 500; color: var(--navy); }
+    .cohort-grid tr:hover td { background: var(--bg); }
+    .cohort-grid td.g {
+      background: var(--green-pale);
+      color: var(--green);
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .cohort-grid td.cur {
+      background: var(--green);
+      color: white;
+      font-weight: 700;
+      border-radius: 4px;
+    }
+    .cohort-grid td.tot {
+      font-weight: 700;
+      color: var(--navy);
+      background: #f0f4f9;
+    }
+
     @media (max-width: 400px) {
       .kpi-grid {
         grid-template-columns: 1fr;
@@ -395,6 +462,235 @@
       <div class="insight-pill">Peak day: Feb 1, 2026 (7 registrations, $1,055)</div>
       <div class="insight-pill warn">Still registering as of March 12 — season is live</div>
     </div>
+  </div>
+
+  <!-- SPRING 2026 COHORT ANALYSIS -->
+  <div class="chart-card full" style="margin-bottom:20px">
+    <div class="section-title"><span></span>Spring 2026 — Player Tenure by Grade</div>
+    <div class="chart-wrapper" style="height:240px">
+      <canvas id="tenureChart"></canvas>
+    </div>
+    <div class="insights">
+      <div class="insight-pill">Grades 5, 7 &amp; 8 are the most veteran-heavy — the program's experienced core</div>
+      <div class="insight-pill warn">Grade 3 is 73% brand new — a natural entry point that needs retention focus</div>
+      <div class="insight-pill">K cohort is 80% new — strong pipeline of young players entering the program</div>
+    </div>
+  </div>
+
+  <!-- COHORT PLAYER TABLES -->
+  <div class="chart-card full" style="margin-bottom:20px">
+    <div class="section-title"><span></span>Spring 2026 — Season History by Grade</div>
+    <p style="font-size:13px; color:var(--slate); margin-bottom:16px">Each row shows a player's grade per season. Blank = not registered that season.</p>
+
+    <!-- Grade tabs -->
+    <div class="cohort-tabs" id="cohortTabs">
+      <button class="ctab active" onclick="showCohort('prek')">Pre-K</button>
+      <button class="ctab" onclick="showCohort('k')">K</button>
+      <button class="ctab" onclick="showCohort('g1')">Gr 1</button>
+      <button class="ctab" onclick="showCohort('g2')">Gr 2</button>
+      <button class="ctab" onclick="showCohort('g3')">Gr 3</button>
+      <button class="ctab" onclick="showCohort('g4')">Gr 4</button>
+      <button class="ctab" onclick="showCohort('g5')">Gr 5</button>
+      <button class="ctab" onclick="showCohort('g6')">Gr 6</button>
+      <button class="ctab" onclick="showCohort('g7')">Gr 7</button>
+      <button class="ctab" onclick="showCohort('g8')">Gr 8</button>
+    </div>
+
+    <!-- Pre-K -->
+    <div class="cohort-table active" id="cohort-prek">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Hannah Chamberlain</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">PK</td><td class="tot">1</td></tr>
+          <tr><td>Merryn Clark</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">PK</td><td class="tot">1</td></tr>
+          <tr><td>Natalia Gordon</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">PK</td><td class="tot">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cohort-table" id="cohort-k">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Maggie Bryant</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td class="cur">K</td><td class="tot">2</td></tr>
+          <tr><td>Lucille Devine</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td class="cur">K</td><td class="tot">2</td></tr>
+          <tr><td>Elizabeth-Lizzy Morin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td class="cur">K</td><td class="tot">2</td></tr>
+          <tr><td>Vivienne Perry</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td class="cur">K</td><td class="tot">2</td></tr>
+          <tr><td>Gwenyth Dragalin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Isabelle Felper</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Ryan Finazzo</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Emma Fitzback</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Joni Gay</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Isabel Hebert</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Lydia Kelly</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Harper Kirkpatrick</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Isabella Lambias</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>June Panahi</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Lily Shamoian</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Madeline Shea</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Gianna Toledo</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Kai Tower</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Kennedy Walsh</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+          <tr><td>Sophia Zawadzki</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">K</td><td class="tot">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cohort-table" id="cohort-g1">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Lupita Nayak</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td></td><td class="g">1</td><td class="cur">1</td><td class="tot">3</td></tr>
+          <tr><td>Hadley Clarke</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">1</td><td class="cur">1</td><td class="tot">2</td></tr>
+          <tr><td>Indiana Sakash</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">1</td><td class="cur">1</td><td class="tot">2</td></tr>
+          <tr><td>Vera Warfield</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">1</td><td class="cur">1</td><td class="tot">2</td></tr>
+          <tr><td>June McCabe</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">1</td><td class="tot">1</td></tr>
+          <tr><td>Murphy Michaud</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">1</td><td class="tot">1</td></tr>
+          <tr><td>Juliette Riley</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">1</td><td class="tot">1</td></tr>
+          <tr><td>Adrienna Shrader</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">1</td><td class="tot">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cohort-table" id="cohort-g2">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Emma Andersen</td><td></td><td></td><td></td><td class="g">Pre-K</td><td></td><td class="g">K</td><td class="g">K</td><td></td><td class="g">1</td><td></td><td></td><td class="g">2</td><td class="cur">2</td><td class="tot">6</td></tr>
+          <tr><td>Navia Gordon</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td></td><td class="g">1</td><td class="g">1</td><td></td><td></td><td class="cur">2</td><td class="tot">4</td></tr>
+          <tr><td>Rose Morgan</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td></td><td class="g">1</td><td class="g">1</td><td></td><td></td><td class="cur">2</td><td class="tot">4</td></tr>
+          <tr><td>Emma O'Malley</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td></td><td></td><td class="g">1</td><td></td><td class="g">2</td><td class="cur">2</td><td class="tot">4</td></tr>
+          <tr><td>Maryse Benso</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td></td><td></td><td class="g">1</td><td></td><td></td><td class="cur">2</td><td class="tot">3</td></tr>
+          <tr><td>Gianna Solari</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">K</td><td></td><td></td><td class="g">1</td><td></td><td></td><td class="cur">2</td><td class="tot">3</td></tr>
+          <tr><td>Everly Duft</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">2</td><td class="cur">2</td><td class="tot">2</td></tr>
+          <tr><td>Grace Pepin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">1</td><td></td><td></td><td class="cur">2</td><td class="tot">2</td></tr>
+          <tr><td>Eloise Dragalin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">2</td><td class="tot">1</td></tr>
+          <tr><td>Claire Sharkey</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">2</td><td class="tot">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cohort-table" id="cohort-g3">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Amelia Clarke</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">2</td><td class="g">2</td><td class="g">3</td><td class="cur">3</td><td class="tot">4</td></tr>
+          <tr><td>McKenzie Newman</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">2</td><td class="g">2</td><td class="g">3</td><td class="cur">3</td><td class="tot">4</td></tr>
+          <tr><td>Claire Perry</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">2</td><td class="g">2</td><td class="g">3</td><td class="cur">3</td><td class="tot">4</td></tr>
+          <tr><td>Jane Abreu</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">3</td><td class="tot">1</td></tr>
+          <tr><td>Kimberly Bigelow</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">3</td><td class="tot">1</td></tr>
+          <tr><td>Ava Bliss</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">3</td><td class="tot">1</td></tr>
+          <tr><td>Ariana Chagnon</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">3</td><td class="tot">1</td></tr>
+          <tr><td>Bridget Hanlon</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">3</td><td class="tot">1</td></tr>
+          <tr><td>Janice Joseph</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">3</td><td class="tot">1</td></tr>
+          <tr><td>Lorraine Shrader</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">3</td><td class="tot">1</td></tr>
+          <tr><td>Emma Smith</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">3</td><td class="tot">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cohort-table" id="cohort-g4">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Fiona McGuire</td><td class="g">K</td><td class="g">K</td><td class="g">1</td><td class="g">1</td><td class="g">1</td><td></td><td class="g">2</td><td class="g">2</td><td class="g">3</td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="cur">4</td><td class="tot">12</td></tr>
+          <tr><td>Elle Clark</td><td class="g">K</td><td class="g">K</td><td class="g">1</td><td class="g">1</td><td></td><td></td><td class="g">2</td><td></td><td></td><td class="g">3</td><td class="g">4</td><td></td><td class="cur">4</td><td class="tot">8</td></tr>
+          <tr><td>Skylar Kranz</td><td></td><td></td><td></td><td class="g">1</td><td class="g">1</td><td></td><td class="g">2</td><td class="g">2</td><td class="g">3</td><td class="g">3</td><td></td><td class="g">4</td><td class="cur">4</td><td class="tot">8</td></tr>
+          <tr><td>Paige McCullough</td><td></td><td></td><td></td><td class="g">1</td><td></td><td class="g">2</td><td class="g">2</td><td></td><td class="g">3</td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="cur">4</td><td class="tot">8</td></tr>
+          <tr><td>Brae Melle</td><td></td><td></td><td></td><td></td><td></td><td class="g">2</td><td class="g">2</td><td class="g">2</td><td class="g">3</td><td class="g">3</td><td></td><td class="g">4</td><td class="cur">4</td><td class="tot">7</td></tr>
+          <tr><td>Harper Liberto</td><td class="g">K</td><td></td><td></td><td class="g">1</td><td></td><td></td><td class="g">2</td><td></td><td class="g">3</td><td class="g">3</td><td></td><td></td><td class="cur">4</td><td class="tot">6</td></tr>
+          <tr><td>Emma Knight</td><td class="g">K</td><td></td><td></td><td class="g">1</td><td></td><td></td><td class="g">2</td><td></td><td></td><td class="g">3</td><td></td><td></td><td class="cur">4</td><td class="tot">5</td></tr>
+          <tr><td>Keira Knight</td><td class="g">K</td><td></td><td></td><td class="g">1</td><td></td><td></td><td class="g">2</td><td></td><td></td><td class="g">3</td><td></td><td></td><td class="cur">4</td><td class="tot">5</td></tr>
+          <tr><td>Riley Cabral</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">2</td><td></td><td></td><td class="g">3</td><td class="g">3</td><td></td><td class="cur">4</td><td class="tot">4</td></tr>
+          <tr><td>Charlotte Riley</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="cur">4</td><td class="tot">4</td></tr>
+          <tr><td>Lexi Joseph</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">3</td><td class="g">3</td><td></td><td class="cur">4</td><td class="tot">3</td></tr>
+          <tr><td>Penelope Burgos</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">3</td><td></td><td></td><td class="cur">4</td><td class="tot">2</td></tr>
+          <tr><td>Abigail Etkind</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">4</td><td class="cur">4</td><td class="tot">2</td></tr>
+          <tr><td>Eleanor Knowles</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">3</td><td></td><td class="cur">4</td><td class="tot">2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cohort-table" id="cohort-g5">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Chloe Grandmaison</td><td class="g">1</td><td class="g">1</td><td class="g">2</td><td class="g">2</td><td class="g">2</td><td class="g">3</td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="g">5</td><td class="cur">5</td><td class="tot">13</td></tr>
+          <tr><td>Tenley Smith</td><td class="g">1</td><td class="g">1</td><td class="g">2</td><td class="g">2</td><td class="g">2</td><td class="g">3</td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="cur">5</td><td class="tot">13</td></tr>
+          <tr><td>Avery Fagan</td><td class="g">1</td><td class="g">1</td><td class="g">2</td><td class="g">2</td><td class="g">2</td><td></td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="cur">5</td><td class="tot">12</td></tr>
+          <tr><td>Julia Chiappini</td><td></td><td></td><td></td><td class="g">2</td><td class="g">3</td><td class="g">3</td><td class="g">3</td><td></td><td class="g">4</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="cur">5</td><td class="tot">9</td></tr>
+          <tr><td>Cecelia Coyle</td><td class="g">1</td><td></td><td class="g">2</td><td class="g">2</td><td class="g">2</td><td></td><td class="g">3</td><td class="g">3</td><td></td><td class="g">4</td><td class="g">4</td><td></td><td class="cur">5</td><td class="tot">9</td></tr>
+          <tr><td>Reese Warfield</td><td></td><td></td><td></td><td></td><td></td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="g">4</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="cur">5</td><td class="tot">8</td></tr>
+          <tr><td>Henley Milligan</td><td></td><td></td><td></td><td class="g">2</td><td></td><td class="g">3</td><td class="g">3</td><td></td><td class="g">4</td><td class="g">4</td><td></td><td class="g">5</td><td class="cur">5</td><td class="tot">7</td></tr>
+          <tr><td>Hope Milligan</td><td></td><td></td><td></td><td class="g">2</td><td></td><td class="g">3</td><td class="g">3</td><td></td><td class="g">4</td><td class="g">4</td><td></td><td class="g">5</td><td class="cur">5</td><td class="tot">7</td></tr>
+          <tr><td>Mary Kate Grady</td><td></td><td></td><td></td><td class="g">2</td><td class="g">2</td><td></td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td></td><td></td><td></td><td class="cur">5</td><td class="tot">6</td></tr>
+          <tr><td>Alani Cruz</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">3</td><td></td><td></td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="cur">5</td><td class="tot">5</td></tr>
+          <tr><td>Izzy McCarthy</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">3</td><td></td><td class="g">4</td><td class="g">4</td><td></td><td class="g">5</td><td class="cur">5</td><td class="tot">5</td></tr>
+          <tr><td>Violet Spada</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">3</td><td></td><td class="g">4</td><td class="g">4</td><td></td><td class="g">5</td><td class="cur">5</td><td class="tot">5</td></tr>
+          <tr><td>Lennon (Poppy) Collari</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">4</td><td></td><td class="g">5</td><td class="cur">5</td><td class="tot">3</td></tr>
+          <tr><td>Cecilia Adams</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">5</td><td class="cur">5</td><td class="tot">2</td></tr>
+          <tr><td>Olivia Kitt</td><td></td><td></td><td class="g">2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">5</td><td class="tot">2</td></tr>
+          <tr><td>Hadley Lombard</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">4</td><td></td><td></td><td class="cur">5</td><td class="tot">2</td></tr>
+          <tr><td>Reagan Lipman</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">5</td><td class="tot">1</td></tr>
+          <tr><td>Cassidy Perkins</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">5</td><td class="tot">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cohort-table" id="cohort-g6">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Eva Karren</td><td class="g">2</td><td class="g">3</td><td class="g">3</td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="g">5</td><td class="g">5</td><td></td><td class="cur">6</td><td class="tot">12</td></tr>
+          <tr><td>Kennedy Mardeuse</td><td></td><td></td><td></td><td></td><td class="g">3</td><td></td><td class="g">4</td><td></td><td class="g">5</td><td class="g">5</td><td></td><td class="g">6</td><td class="cur">6</td><td class="tot">6</td></tr>
+          <tr><td>Sloane DelConte</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">5</td><td class="g">5</td><td></td><td></td><td class="cur">6</td><td class="tot">3</td></tr>
+          <tr><td>Anabella Alicea</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">5</td><td></td><td></td><td class="cur">6</td><td class="tot">2</td></tr>
+          <tr><td>Alannah Laino</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">5</td><td></td><td></td><td class="cur">6</td><td class="tot">2</td></tr>
+          <tr><td>Natalie Minnaert</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">6</td><td class="cur">6</td><td class="tot">2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cohort-table" id="cohort-g7">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Andrea ONdrasek</td><td class="g">3</td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="g">5</td><td class="g">5</td><td class="g">6</td><td class="g">6</td><td></td><td class="g">7</td><td class="cur">7</td><td class="tot">12</td></tr>
+          <tr><td>Lyla Melle</td><td></td><td></td><td class="g">4</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="g">5</td><td class="g">5</td><td class="g">6</td><td class="g">6</td><td></td><td class="g">7</td><td class="cur">7</td><td class="tot">10</td></tr>
+          <tr><td>Ally McLaren</td><td class="g">3</td><td class="g">3</td><td class="g">4</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="g">5</td><td></td><td></td><td></td><td></td><td class="g">7</td><td class="cur">7</td><td class="tot">9</td></tr>
+          <tr><td>Grace Hoye</td><td class="g">3</td><td class="g">3</td><td></td><td></td><td class="g">4</td><td class="g">5</td><td class="g">5</td><td class="g">5</td><td class="g">6</td><td></td><td></td><td></td><td class="cur">7</td><td class="tot">8</td></tr>
+          <tr><td>Inika Arun</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">5</td><td class="g">5</td><td class="g">5</td><td class="g">6</td><td></td><td class="g">7</td><td class="cur">7</td><td class="tot">6</td></tr>
+          <tr><td>Brianna Daniels</td><td></td><td></td><td></td><td class="g">4</td><td class="g">4</td><td></td><td class="g">5</td><td class="g">5</td><td class="g">6</td><td></td><td></td><td></td><td class="cur">7</td><td class="tot">6</td></tr>
+          <tr><td>Alyssa Harris</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">5</td><td class="g">5</td><td></td><td class="g">6</td><td></td><td></td><td class="cur">7</td><td class="tot">4</td></tr>
+          <tr><td>Vivian Moore</td><td></td><td></td><td></td><td class="g">4</td><td></td><td></td><td class="g">5</td><td></td><td></td><td class="g">6</td><td></td><td></td><td class="cur">7</td><td class="tot">4</td></tr>
+          <tr><td>Lena Sabatini</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">5</td><td class="g">5</td><td></td><td class="g">6</td><td></td><td></td><td class="cur">7</td><td class="tot">4</td></tr>
+          <tr><td>Alexis Der Garabedian</td><td></td><td class="g">3</td><td class="g">4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">7</td><td class="tot">3</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cohort-table" id="cohort-g8">
+      <table class="cohort-grid">
+        <thead><tr><th>Player</th><th>Sp22</th><th>Su22</th><th>Fa22</th><th>Sp23</th><th>Su23</th><th>Fa23</th><th>Sp24</th><th>Su24</th><th>Fa24</th><th>Sp25</th><th>Su25</th><th>Fa25</th><th>Sp26</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Aliya DeLucia</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="g">5</td><td class="g">5</td><td></td><td class="g">6</td><td></td><td class="g">7</td><td class="g">7</td><td></td><td></td><td class="cur">8</td><td class="tot">9</td></tr>
+          <tr><td>Kyla Hamilton</td><td class="g">4</td><td></td><td class="g">5</td><td class="g">5</td><td></td><td class="g">6</td><td class="g">6</td><td></td><td class="g">7</td><td class="g">7</td><td></td><td class="g">8</td><td class="cur">8</td><td class="tot">9</td></tr>
+          <tr><td>Nora Samperi</td><td class="g">4</td><td></td><td class="g">5</td><td class="g">5</td><td></td><td class="g">6</td><td class="g">6</td><td class="g">6</td><td class="g">7</td><td></td><td></td><td class="g">8</td><td class="cur">8</td><td class="tot">9</td></tr>
+          <tr><td>Abigail Suttill</td><td class="g">4</td><td></td><td class="g">5</td><td class="g">5</td><td></td><td class="g">6</td><td class="g">6</td><td></td><td class="g">7</td><td class="g">7</td><td></td><td class="g">8</td><td class="cur">8</td><td class="tot">9</td></tr>
+          <tr><td>Anna Goodman</td><td class="g">4</td><td class="g">4</td><td class="g">5</td><td class="g">5</td><td class="g">5</td><td></td><td class="g">6</td><td></td><td></td><td class="g">7</td><td></td><td></td><td class="cur">8</td><td class="tot">8</td></tr>
+          <tr><td>Hadley Farley</td><td></td><td></td><td class="g">5</td><td class="g">5</td><td></td><td></td><td class="g">6</td><td class="g">6</td><td class="g">7</td><td class="g">7</td><td></td><td></td><td class="cur">8</td><td class="tot">7</td></tr>
+          <tr><td>Kyra Peters</td><td class="g">4</td><td></td><td class="g">5</td><td></td><td class="g">5</td><td class="g">6</td><td class="g">6</td><td></td><td></td><td class="g">7</td><td></td><td></td><td class="cur">8</td><td class="tot">7</td></tr>
+          <tr><td>Emersyn Duguay</td><td class="g">4</td><td class="g">4</td><td></td><td class="g">5</td><td></td><td></td><td class="g">6</td><td></td><td></td><td class="g">7</td><td></td><td></td><td class="cur">8</td><td class="tot">6</td></tr>
+          <tr><td>Grace Kelly</td><td class="g">4</td><td class="g">4</td><td></td><td class="g">5</td><td></td><td></td><td class="g">6</td><td></td><td></td><td class="g">7</td><td></td><td></td><td class="cur">8</td><td class="tot">6</td></tr>
+          <tr><td>Zara Kevork</td><td></td><td></td><td></td><td class="g">5</td><td></td><td></td><td class="g">6</td><td class="g">6</td><td></td><td class="g">7</td><td></td><td></td><td class="cur">8</td><td class="tot">5</td></tr>
+          <tr><td>Ava Breen</td><td></td><td class="g">5</td><td></td><td class="g">5</td><td></td><td></td><td></td><td></td><td></td><td class="g">7</td><td></td><td></td><td class="cur">8</td><td class="tot">4</td></tr>
+          <tr><td>Brielle Laney</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="g">7</td><td></td><td class="g">8</td><td class="cur">8</td><td class="tot">3</td></tr>
+          <tr><td>Aquinnah Cosme</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">8</td><td class="tot">1</td></tr>
+          <tr><td>Ivy Lakin</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="cur">8</td><td class="tot">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <!-- PAYMENT BREAKDOWN -->
@@ -681,6 +977,53 @@
         x: { grid: { display: false }, ticks: { maxRotation: 45, font: { size: 10 }, maxTicksLimit: 20 } },
         y: { position: 'left', grid: { color: '#eef2ef' }, title: { display: true, text: 'Cumulative' } },
         y2: { position: 'right', grid: { display: false }, max: 12, title: { display: true, text: 'Daily' } }
+      }
+    }
+  });
+
+  // Tab switching
+  function showCohort(id) {
+    document.querySelectorAll('.cohort-table').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.ctab').forEach(el => el.classList.remove('active'));
+    document.getElementById('cohort-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Tenure chart
+  new Chart(document.getElementById('tenureChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Pre-K','K','Gr 1','Gr 2','Gr 3','Gr 4','Gr 5','Gr 6','Gr 7','Gr 8'],
+      datasets: [
+        {
+          label: 'Brand New (1 season)',
+          data: [3,16,4,2,8,0,2,0,0,2],
+          backgroundColor: GREEN4,
+          stack: 'tenure', borderRadius: 3,
+        },
+        {
+          label: 'Building (2–4 seasons)',
+          data: [0,4,4,7,3,6,4,4,4,2],
+          backgroundColor: GREEN3,
+          stack: 'tenure', borderRadius: 3,
+        },
+        {
+          label: 'Veteran (5+ seasons)',
+          data: [0,0,0,1,0,8,12,2,6,10],
+          backgroundColor: GREEN,
+          stack: 'tenure', borderRadius: 3,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { padding: 16, font: { size: 12 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} players` } }
+      },
+      scales: {
+        x: { grid: { display: false }, stacked: true },
+        y: { grid: { color: '#eef2ef' }, stacked: true, beginAtZero: true }
       }
     }
   });
