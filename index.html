@@ -453,6 +453,29 @@
     </div>
   </div>
 
+  <!-- FALL-TO-FALL RETENTION + SAME-YEAR ENGAGEMENT -->
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="section-title"><span></span>Fall-to-Fall Retention</div>
+      <div class="chart-wrapper" style="height:220px">
+        <canvas id="retentionChart"></canvas>
+      </div>
+      <div class="insights">
+        <div class="insight-pill warn">2022 → 2023 retention (37.1%) is the low point on record</div>
+        <div class="insight-pill">2023 → 2024 (77.5%) is the strongest year-over-year hold rate</div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="section-title"><span></span>Same-Year Engagement — Spring Registrants</div>
+      <div class="chart-wrapper" style="height:220px">
+        <canvas id="sameYearChart"></canvas>
+      </div>
+      <div class="insights">
+        <div class="insight-pill info">Share of Spring registrants who also play Summer and/or Fall the same year — likely reflects family choice (vacations, other summer activities) more than dissatisfaction</div>
+      </div>
+    </div>
+  </div>
+
   <!-- GRADE DISTRIBUTION + GEOGRAPHY -->
   <div class="chart-grid-3">
     <div class="chart-card">
@@ -1008,6 +1031,71 @@
         tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} registrations` } }
       },
       cutout: '62%'
+    }
+  });
+
+  // 3b. Fall-to-Fall retention
+  const retentionLabels = ['2022 → 2023', '2023 → 2024', '2024 → 2025', '2025 → 2026'];
+  const retentionPct = [37.1, 77.5, 50.8, 59.6];
+  new Chart(document.getElementById('retentionChart'), {
+    type: 'bar',
+    data: {
+      labels: retentionLabels,
+      datasets: [{
+        label: 'Retention',
+        data: retentionPct,
+        backgroundColor: retentionPct.map(v => v < 40 ? GOLD : GREEN),
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.raw}% of Fall registrants returned the following Fall` } }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: '#eef2ef' }, beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } }
+      }
+    }
+  });
+
+  // 3c. Same-year engagement (Spring registrants also playing Summer/Fall that year)
+  const syYears = ['2022', '2023', '2024', '2025', '2026'];
+  const syAlsoSummerPct = [44.7, 28.6, 39.3, 24.4, 21.9];
+  const syAlsoFallPct = [48.2, 38.1, 50.0, 44.9, 36.8];
+  new Chart(document.getElementById('sameYearChart'), {
+    type: 'line',
+    data: {
+      labels: syYears,
+      datasets: [
+        {
+          label: 'Also played Summer',
+          data: syAlsoSummerPct,
+          borderColor: GOLD,
+          backgroundColor: GOLD,
+          tension: 0.3,
+        },
+        {
+          label: 'Also played Fall',
+          data: syAlsoFallPct,
+          borderColor: GREEN,
+          backgroundColor: GREEN,
+          tension: 0.3,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 14, font: { size: 12 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}%` } }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: '#eef2ef' }, beginAtZero: true, max: 60, ticks: { callback: v => v + '%' } }
+      }
     }
   });
 
